@@ -1,38 +1,74 @@
 .App {
-  text-align: center;
+  background-color: rgb(36, 40, 46);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  padding: 2.5rem 0;
+  color: white;
+  font-size: 5rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.characters {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 47%;
+  background: rgb(59, 62, 67);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  display: flex;
+}
+
+.card img {
+  width: 15rem;
+  height: 100%;
+}
+
+.loading {
+  background-color: rgb(36, 40, 46);
+  height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.loading h3 {
   color: white;
+  font-size: 7.5rem;
 }
 
-.App-link {
-  color: #61dafb;
+.text-container {
+  padding: 1rem;
+  color: white;
+  font-size: 1.25rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-container h3 {
+  font-size: 2rem;
+}
+
+.status {
+  margin-bottom: 1rem;
+}
+
+.title {
+  color: grey;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+button {
+  padding: 1rem 4rem;
+  font-size: 2rem;
+  margin: 2rem 0;
+  margin-right: 1rem;
 }
