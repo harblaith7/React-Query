@@ -1,58 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
-import axios from "axios";
 import Character from "./Character";
 
 export default function Characters() {
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(40);
 
-  const fetchCrypto = (page = 0) =>
-    fetch("https://rickandmortyapi.com/api/character?page=" + page).then(
-      (res) => res.json()
+  const fetchCharacters = async ({ queryKey }) => {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character?page=${queryKey[1]}`
     );
+    return response.json();
+  };
 
-  const { isLoading, isError, error, data, isFetching, isPreviousData } =
-    useQuery(["coin", page], () => fetchCrypto(page), {
+  const { data, status, isPreviousData } = useQuery(
+    ["characters", page],
+    fetchCharacters,
+    {
       keepPreviousData: true,
-    });
+    }
+  );
 
-  console.log({ isLoading, isError, error, data, isFetching, isPreviousData });
+  console.log(isPreviousData);
 
-  if (data) {
-    console.log(data, data.hasMore);
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "error") {
+    return <div>Error</div>;
   }
 
   return (
-    <div>
-      {isLoading ? (
-        <div className="loading">
-          <h3>Loading...</h3>
-        </div>
-      ) : isError ? (
-        <div>Error: {error.message}</div>
-      ) : (
-        <div className="characters">
-          {data.results.map((character) => (
-            <Character character={character} />
-          ))}
-        </div>
-      )}
-      <button
-        onClick={() => setPage((old) => Math.max(old - 1, 0))}
-        disabled={page === 1}
-      >
-        Previous Page
-      </button>{" "}
-      <button
-        onClick={() => {
-          if (!isPreviousData) {
-            setPage((old) => old + 1);
-          }
-        }}
-      >
-        Next Page
-      </button>
-      {isFetching ? <span> Loading...</span> : null}{" "}
+    <div className="characters">
+      {data.results.map((character) => (
+        <Character character={character} />
+      ))}
+      <div>
+        <button
+          onClick={() => setPage((old) => Math.max(old - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() => setPage((old) => old + 1)}
+          disabled={!data.info.next}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }
